@@ -1,5 +1,5 @@
 //Links page creation
-const generateHTML = requrie('./src/generateHTML');
+const generateHTML = require('./src/generateHTML');
 
 //Team profiles
 const Manager = require('./lib/Manager');
@@ -92,7 +92,7 @@ const addEmployee = () => {
             type: 'list',
             name: 'role',
             message: "Please choose a role for your employee",
-            choices: ['Engineer, Intern']
+            choices: ['Engineer' , 'Intern']
         },
         {
             type: 'input',

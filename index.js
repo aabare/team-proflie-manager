@@ -148,7 +148,60 @@ const addEmployee = () => {
             }
         },
         {
-            
+            type: 'input',
+            name: 'school',
+            message: "Please enter the intern's school.",
+            when: (input) => input.role === "Intern",
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log ("Please enter the intern's school.")
+                }
+            }        
+        },
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Would you like to add another team member?',
+            default: false
         }
     ])
-}
+    .then(employeeData => {
+        //Employee types
+
+        let {name, id, email, role, github, school, confirmAddEmployee} = employeeData;
+        let employee;
+        
+        if (role === "Engineer") {
+            employee = new Engineer (name, id, email, github);
+
+            console.log(employee);
+        } else if (role === "Intern") {
+            employee = new Intern (name, id, email, school);
+
+            console.log(employee)
+        }
+
+        teamArray.push(employee);
+
+        if(confirmAddEmployee) {
+            return addEmployee(teamArray);
+        } else {
+            return teamArray;
+        }
+    })
+};
+
+//Function to generate the HTML page
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("Your team profile has been created. It is located in the index.html")
+
+        }
+    })
+};
